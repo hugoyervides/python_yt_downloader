@@ -17,6 +17,12 @@ myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient["pythonyt"]
 mycol = mydb["videos"]
 
+#Function to update video timestamp
+def update_timestamp(videoId):
+    query = { 'videoId' : videoId}
+    updateQuery = { '$set' : {'downloadTimestamp' : int(time.time())}}
+    mycol.update_one(query,updateQuery)
+
 def get_file_path(videoId):
     return DOWNLOAD_PATH + '/' + videoId + '.mp3'
 
