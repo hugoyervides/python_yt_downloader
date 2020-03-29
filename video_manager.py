@@ -85,7 +85,7 @@ def download_video(videoId):
         print('[VIDEO MANAGER] Video downloaded, converting file to MP3')
         mp4_audio = AudioSegment.from_file(filePath, "mp4")
         #Export it to mp3
-        metadata = {'artist': videoInfo['author'], 'album': videoInfo['title']}
+        metadata = {'artist': videoInfo['author'], 'title': videoInfo['title']}
         mp4_audio.export(DOWNLOAD_PATH + '/' + videoId + '.mp3', format='mp3', tags=metadata)
         print('[VIDEO MANAGER] Convertion complete, inserting video on DB and deleting mp4 file')
         #Remove the old mp4 file
