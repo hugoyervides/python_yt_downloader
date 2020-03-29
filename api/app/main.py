@@ -40,6 +40,6 @@ def check_video(video):
             json_util.dumps(exists(video)),
             mimetype='application/json')
 
-#DEV APP RUN 
 if __name__ == "__main__":
-    app.run()
+    # Only for debugging while developing
+    app.run(host='0.0.0.0', debug=True, port=80)
