@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, Response, send_file
-from video_manager import download_video, exists, get_file_path
+from video_manager import download_video, exists, get_file_path, update_timestamp
 from bson import json_util
 app = Flask(__name__)
 
@@ -10,7 +10,8 @@ def get_file(video, attachment):
         return Response(
                 json_util.dumps(data),
                 mimetype='application/json')
-    #Stream the song
+    #Return the song and update timestamp
+    update_timestamp(video)
     return send_file(get_file_path(video),as_attachment=attachment ,mimetype='audio/mpeg')
 
 @app.route('/convert/<video>')
