@@ -11,11 +11,33 @@ MAX_CACHE_SIZE = 8000 #This is in MB
 PURGE_SIZE = 100 #Amount of data to delete if we reach the MAX_CACHE_SIZE limit
 
 #Connect to the Database
-myclient = pymongo.MongoClient("mongodb://db:27017")
+myclient = pymongo.MongoClient("mongodb://localhost:27017")
 
 #Select database and collection
 mydb = myclient["pythonyt"]
 mycol = mydb["videos"]
+myqueue = mydb["queue"]
+
+#Function to check if a video is in processing queue
+def check_queue(videoId):
+    query = { 'videoId' : videoId}
+    if myqueue.find(query).count() > 0:
+        print('[VIDEO MANAGER] Video already in processing queue, skiping')
+        return True
+    else:
+        return False
+
+#Function to remove video from queue
+def remove_queue(videoId):
+    print('[VIDEO MANAGER] Removing video ' +  videoId + ' from processing queue')
+    query = { 'videoId' : videoId}
+    myqueue.delete_one(query)
+
+#Function to add video to queue
+def add_queue(videoId):
+    print('[VIDEO MANAGER] Adding video to processing queue')
+    query = { 'videoId' : videoId}
+    myqueue.insert_one(query)
 
 #Function to update video timestamp
 def update_timestamp(videoId):
@@ -77,6 +99,7 @@ def download_video(videoId):
         if yt.length > 630:
             print('[VIDEO MANAGER] Error, video is too long!!')
             return { 'error': 'Video is to long!'}
+        
         videoInfo = { "videoId": videoId, 
                     "title" : yt.title, 
                     "length" : yt.length, 
