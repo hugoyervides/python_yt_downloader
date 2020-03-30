@@ -13,6 +13,11 @@ RUN pip install -r /tmp/requirements.txt
 
 # copy over our app code
 COPY ./app /app
+COPY ./ffmpegbin /tmp/
+
+#Move FFMPEG files to path
+RUN mv /tmp/ffmpegbin/ffmpeg /usr/local/bin/
+RUN mv /tmp/ffmpegbin/ffprobe /usr/local/bin/
 
 # set an environmental variable, MESSAGE,
 # which the app will use and display
