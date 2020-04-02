@@ -1,22 +1,20 @@
 FROM tiangolo/meinheld-gunicorn-flask:python3.6-alpine3.8
 
+#Enviroment Variables
 ENV LISTEN_PORT 8080
+
 
 EXPOSE 8080
 
-# copy over our requirements.txt file
+# Copy requirements file for PIP
 COPY requirements.txt /tmp/
 
 #Install FMPEG for mp3 convertion
 RUN apk add --no-cache ffmpeg
 
-# upgrade pip and install required python packages
+# Upgrade pip and install the requirements file
 RUN pip install -U pip
 RUN pip install -r /tmp/requirements.txt
 
-# copy over our app code
+# Copy the app code and gunicorn config file
 COPY ./app /app
-
-# set an environmental variable, MESSAGE,
-# which the app will use and display
-ENV MESSAGE "Youtube Downloader API Started"
