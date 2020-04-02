@@ -2,7 +2,8 @@ FROM tiangolo/meinheld-gunicorn-flask:python3.6-alpine3.8
 
 #Enviroment Variables
 ENV LISTEN_PORT 8080
-
+ENV WORKERS_PER_CORE 3
+ENV LOG_LEVEL debug
 
 EXPOSE 8080
 
