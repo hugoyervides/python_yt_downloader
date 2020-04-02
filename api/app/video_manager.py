@@ -11,7 +11,7 @@ MAX_CACHE_SIZE = 8000 #This is in MB
 PURGE_SIZE = 100 #Amount of data to delete if we reach the MAX_CACHE_SIZE limit
 
 #Connect to the Database
-myclient = pymongo.MongoClient("mongodb://localhost:27017")
+myclient = pymongo.MongoClient("mongodb://db:27017")
 
 #Select database and collection
 mydb = myclient["pythonyt"]
